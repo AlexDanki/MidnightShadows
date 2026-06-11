@@ -3,15 +3,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     private CharacterController controller;
     public float mouseSensitivity = 100f;
     public float walkSpeed = 5f;
+    public float rumSpeed = 5f;
     public AudioSource footAudioSource;
     public InputActionReference moveAction;
+    public Animator animator;
 
     private float currentSpeed;
     float gravity = -0.98f; 
     
+    public bool stopMotion = false;
 
     private void OnEnable()
     {
@@ -25,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         controller = GetComponent<CharacterController>();
     }
 
@@ -36,10 +41,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        Move();
-        ApplyGravity();
-        Rotate();
+        if (!stopMotion) 
+        {
+            Move();
+            ApplyGravity();
+            Rotate();
+        }
+        
        
     }
 
@@ -49,7 +57,7 @@ public class PlayerController : MonoBehaviour
         float moveZ = moveAction.action.ReadValue<Vector2>().y;
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
-
+        animator.SetFloat("speed", move.magnitude);
         if (move.magnitude != 0)
         {
             if (!footAudioSource.isPlaying)
@@ -59,7 +67,10 @@ public class PlayerController : MonoBehaviour
         }
         else footAudioSource.Stop();
 
+
+        ChangeCurrentSpeed();
         controller.Move(move * currentSpeed * Time.deltaTime);
+        
     }
 
     void Rotate() 
@@ -79,6 +90,18 @@ public class PlayerController : MonoBehaviour
         else 
         {
             controller.Move(Vector3.up * -0.02f);
+        }
+    }
+
+    void ChangeCurrentSpeed() 
+    {
+        if (Keyboard.current.shiftKey.IsActuated()) 
+        {
+            currentSpeed = rumSpeed;
+        }
+        else 
+        {
+            currentSpeed = walkSpeed;
         }
     }
 }

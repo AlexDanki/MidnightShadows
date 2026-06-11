@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f6d8bf769b136488fe2fc7cad9f9bb, type: 3}
+  m_Name: FirstMessage
+  m_EditorClassIdentifier: Assembly-CSharp::MessageData
+  Message: "O gerador da \xE1rea antiga est\xE1 desligado, ligue o antes da meia
+    noite.\n\nA reforma est\xE1 consumindo muita energia.\n\nE mais uma coisa.\n\nSe
+    ouvir algu\xE9m chamando no corredor 04 ignore. "
